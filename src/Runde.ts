@@ -105,7 +105,7 @@ export default class Runde {
             throw Error('Spieler nicht am Zug')
         } else if (this.trumpffarbe != KartenTyp.bizard) {
             throw Error('Trumpf kann nur beim bizard erneut gesetzt werden')
-        } else if (KartenTyp.istFarbe(trumpffarbe) == false) {
+        } else if (Karte.istFarbe(trumpffarbe) == false) {
             throw Error('Neue Trumpffarbe muss eine Farbe sein')
         } else {
             this.trumpffarbe = trumpffarbe
@@ -165,7 +165,7 @@ export default class Runde {
             throw Error('Spieler nicht am Zug')
         } else {
             const angespielteFarbe = this.stich?.getAngespielteFarbe()
-            const istTrumpf = !KartenTyp.istFarbe(karte.getTyp()) || karte.getTyp() == this.trumpffarbe
+            const istTrumpf = !Karte.istFarbe(karte.getTyp()) || karte.getTyp() == this.trumpffarbe
             const bedient = karte.getTyp() == angespielteFarbe
             const mussBedienen = angespielteFarbe != undefined
             if (!istTrumpf && mussBedienen && !bedient && spieler.hatFarbe(angespielteFarbe)) {

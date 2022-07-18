@@ -63,7 +63,7 @@ export default class Stich extends Map<Spieler, Karte> {
     public getAngespielteFarbe(): KartenTyp | undefined {
         for (const karte of this.values()) {
             const typ = karte.getTyp()
-            if (KartenTyp.istFarbe(typ)) {
+            if (Karte.istFarbe(typ)) {
                 return typ
             }
         }
