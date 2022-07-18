@@ -24,3 +24,12 @@ test('Die equals Methode von Karte', () => {
     expect(karte3.equals(new Karte(KartenTyp.blau, 5))).toBe(false)
     expect(karte3.equals(new Karte(KartenTyp.bizard))).toBe(false)
 })
+
+test('istFarbe()', () => {
+    expect(Karte.istFarbe(KartenTyp.rot)).toBe(true)
+    expect(Karte.istFarbe(KartenTyp.gruen)).toBe(true)
+    expect(Karte.istFarbe(KartenTyp.blau)).toBe(true)
+    expect(Karte.istFarbe(KartenTyp.gelb)).toBe(true)
+    expect(Karte.istFarbe(KartenTyp.bizard)).toBe(false)
+    expect(Karte.istFarbe(KartenTyp.barr)).toBe(false)
+})

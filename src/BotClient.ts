@@ -1,4 +1,5 @@
 import IClient from "./IClient";
+import Karte from "./Karte";
 import KartenTyp from "./KartenTyp";
 import { KartenNachricht, SpielNachricht } from "./Nachricht";
 
@@ -67,7 +68,7 @@ export default class BotClient implements IClient {
 
     private zufaelligerTrumpf(hand: KartenNachricht[]) {
         for (const karte of hand) {
-            if (KartenTyp.istFarbe(karte.typ)) {
+            if (Karte.istFarbe(karte.typ)) {
                 return karte.typ
             }
         }
@@ -81,7 +82,7 @@ export default class BotClient implements IClient {
     private zufaelligeKarte(hand: KartenNachricht[], angespielt?: KartenTyp): KartenNachricht {
         if (angespielt != undefined) {
             for (const karte of hand) {
-                if (karte.typ == angespielt || KartenTyp.istFarbe(karte.typ) == false) {
+                if (karte.typ == angespielt || Karte.istFarbe(karte.typ) == false) {
                     return karte
                 }
             }

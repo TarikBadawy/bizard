@@ -41,4 +41,15 @@ export default class Karte {
             return karte.getTyp() == this.typ && karte.getWert() == this.wert
         }
     }
+
+    /**
+     * @param typ Der zu überprüfende Typ
+     * @returns Wahr, wenn der Typ eine Farbe ist
+     */
+    public static istFarbe(typ: KartenTyp): boolean {
+        return typ == KartenTyp.rot
+        || typ == KartenTyp.gruen
+        || typ == KartenTyp.blau
+        || typ == KartenTyp.gelb
+    }
 }
