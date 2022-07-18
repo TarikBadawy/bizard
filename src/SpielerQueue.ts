@@ -1,10 +1,9 @@
 import Spieler from "./Spieler";
 
 /**
- * Modelliert die Sitzreihenfolge und zusaetzlich das durchgehen der Reihenfolge z.B. fuer einen Stich.
+ * Modelliert die Sitzreihenfolge und zusätzlich das Durchgehen der Reihenfolge z.B. für einen Stich.
  * Dabei nimmt die SpielerQueue eine feste nicht veraenderbare Sitzreihenfolge entgegen. Anhand dieser
- * Reihenfolge kann eine Warteschlange erstellt werden, welche bei einem uebergebenen Spieler anfaengt.
- * Diese Warteschlange, wird dann der Reihenfolge nach abgearbeitet.
+ * Reihenfolge kann eine Warteschlange erstellt werden, welche bei einem übergebenen Spieler anfängt.
  */
 export default class SpielerQueue {
     private warteschlange: Spieler[]
@@ -12,7 +11,12 @@ export default class SpielerQueue {
 
     /**
      * @param reihenfolge Die Sitzreihenfolge der Spieler.
-     * @throws wenn reihenfolge.length == 0
+     * @param rotation Der offset (versetz) des ersten Spielers
+     * @throws Wenn `reihenfolge.length == 0`
+     * @example
+     * const sq = new SpielerQueue([s0, s1, s2, s3], 2)
+     * sq.getAktiverSpieler() // s2
+     * sq.getRestlichenSpieler() // [s3, s0, s1]
      */
     constructor(reihenfolge: Spieler[], rotation: number = 0) {
         if (reihenfolge.length == 0) {
@@ -25,24 +29,20 @@ export default class SpielerQueue {
         this.aktiverSpieler = this.naechsterSpieler()
     }
 
-    /**
-     * @returns den vordersten Spieler in der Warteschlange
-     */
+    /** @returns Der vorderste Spieler in der Warteschlange. */
     public getAktiverSpieler(): Spieler {
         return this.aktiverSpieler
     }
 
-    /**
-     * @returns Die restlichen Spieler in der Warteschlange
-     */
+    /** @returns Die restlichen Spieler in der Warteschlange. */
     public getRestlichenSpieler(): Spieler[] {
         return this.warteschlange
     }
 
     /**
-     * Entfernt den Vordersten Spieler aus der Warteschlange
-     * @returns den entfernten Spieler
-     * @throws beendet() == true
+     * Entfernt den Vordersten Spieler aus der Warteschlange.
+     * @returns Der entfernte Spieler.
+     * @throws `beendet() == true`
      */
     public naechsterSpieler(): Spieler {
         const spieler = this.warteschlange.shift()
@@ -54,9 +54,7 @@ export default class SpielerQueue {
         }
     }
 
-    /**
-     * @returns Wahr wenn keine Spieler mehr in der Warteschlange sind.
-     */
+    /** @returns Wahr wenn keine Spieler mehr in der Warteschlange sind. */
     public beendet(): boolean {
         return this.warteschlange.length == 0
     }

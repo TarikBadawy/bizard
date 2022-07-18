@@ -9,11 +9,11 @@ import Stich from "./Stich";
 /**
  * In der einer Runde werden bekommt jeder Spieler zu Beginn genau so viele Karten, Stiche zu gewinnen sind.
  * In der vierten Stichrunde werden also jeden vier Karten ausgeteilt.
- * In der fuenften Runde werden fuenf Karten an jeden verteilt, usw.
- * Nachdem die Karten ausgeteilt wurden, wird vom Deck die oberste gezogen, welche die Trumpffarbe bestimmt
+ * In der fünften Runde werden fünf Karten an jeden verteilt, usw.
+ * Nachdem die Karten ausgeteilt wurden, wird vom Deck die oberste gezogen, welche die Trumpffarbe bestimmt.
  * Ist die aufgedeckte Karte ein Narr, dann gibt es in dieser Runde keine Trumpffarbe.
- * Ist die aufgedeckte Karte ein Zauberer, dann darf der Lehrling, der die Karten ausgeteilt hat,
- * eine Trumpffarbe mit setzeTrumpf() bestimmen.
+ * Ist die aufgedeckte Karte ein Zauberer, dann darf der Spieler, der die Karten ausgeteilt hat,
+ * eine Trumpffarbe mit {@link setzeTrumpffarbe} bestimmen.
  */
 export default class Runde {
     private readonly rundenNummer: number
@@ -27,11 +27,11 @@ export default class Runde {
 
     /**
      * Erstellt eine neue Runde, teielt die Karten aus und setzt die Trumpffarbe. Zudem wird direkt ein
-     * Stich erstellt. Es sollte nach Erstellung der Runde mit getTrumpffarbe() ueberprueft werden ob
-     * die Trumpffarbe ein bizard ist, um sie mit setzeTrumpffarbe() zu einer Farbe zu aendern
-     * @param rundenNummer die Nummer der Runde. Muss zwischen 1 und 14 liegen
-     * @param reihenfolge Eine Liste von Spieler, welche die Sitzreihenfolge angibt
-     * @throws wenn rundenNummer nicht zwischen 1 und 14 liegt
+     * Stich erstellt. Es sollte nach Erstellung der Runde mit {@link getTrumpffarbe} überprüft werden ob
+     * die Trumpffarbe ein bizard ist, um sie mit {@link setzeTrumpffarbe} zu einer Farbe zu ändern.
+     * @param rundenNummer Die Nummer der Runde. Muss zwischen 1 und 14 liegen.
+     * @param reihenfolge Eine Liste von Spieler, welche die Sitzreihenfolge bestimmt.
+     * @throws Wenn {@link rundenNummer} nicht zwischen 1 und 14 liegt
      */
     constructor(rundenNummer: number, reihenfolge: Spieler[]) {
         if (rundenNummer < 1 || 14 < rundenNummer) {
@@ -87,18 +87,19 @@ export default class Runde {
     }
 
     /**
-     * @param spieler der ueberprueft werden soll
-     * @returns ob der angegebene Spieler gerade am Zug ist
+     * @param spieler Der Spieler überprüft werden soll.
+     * @returns Wahr wenn der angegebene Spieler gerade am Zug ist.
      */
     public istAktiverSpieler(spieler: Spieler): boolean {
         return this.getWarteschlange().getAktiverSpieler() == spieler
     }
 
     /**
-     * @param trumpffarbe die gewaehlt wurde
-     * @throws wenn spieler != getWarteschlange().getAktiverSpieler()
-     * @throws wenn getTrumpffarbe() != KartenTyp.bizard
-     * @throws wenn trumpffarbe.istFarbe() == false
+     * @param spieler Der Spieler der die Trumpffarbe setzt.
+     * @param trumpffarbe Die vom Spieler gewählt wurde.
+     * @throws Wenn `istAktiverSpieler(spieler) == false`
+     * @throws Wenn `getTrumpffarbe() != KartenTyp.bizard`
+     * @throws Wenn `trumpffarbe.istFarbe() == false`
      */
     public setzeTrumpffarbe(spieler: Spieler, trumpffarbe: KartenTyp): void {
         if (this.istAktiverSpieler(spieler) == false) {
@@ -115,15 +116,15 @@ export default class Runde {
 
     /**
      * Jeder Spieler muss vorhersagen, wie viele Stiche er in dieser Runde wohl machen wird.
-     * Der Reihe nach geben die Lehrlinge ihre Vorhersagen an den Vertrauten weiter.
-     * Es beginnt der Spieler nach dem Kartengebers, so das der Kartengeber als letztes vorhersagt.
-     * Sobald die letzte Vorheraseg abgegeben wurde. Wird eine neue Warteschlange beginnend mit
-     * dem Spieler nach dem Kartengeber erstellt
-     * @param spieler der vorhersagt
-     * @param vorhersage des Spielers
-     * @throws wenn getVorhersagen().has(spieler)
-     * @throws wenn this.istAktiverSpieler(spieler) == false
-     * @throws wenn vorhersage < 0
+     * Der Reihe nach geben die Spieler ihre Vorhersagen an . Es beginnt der Spieler nach dem
+     * Kartengebers, so das der Kartengeber als letztes vorhersagt. Sobald die letzte Vorherasge
+     * abgegeben wurde. Wird eine neue Warteschlange beginnend mit dem Spieler nach dem
+     * Kartengeber erstellt.
+     * @param spieler Der Spieler der vorhersagt.
+     * @param vorhersage Die Vorhersage des Spielers.
+     * @throws Wenn `getVorhersagen().has(spieler)`
+     * @throws Wenn `istAktiverSpieler(spieler) == false`
+     * @throws Wenn `vorhersage < 0`
      */
     public macheVorhersage(spieler: Spieler, vorhersage: number): void {
         if (this.trumpffarbe == KartenTyp.bizard) {
@@ -150,15 +151,16 @@ export default class Runde {
      * Zauberer- und Narrenkarten dürfen immer gespielt werden, auch wenn man bedienen könnte. 
      * Auch muss man mit ihnen eine ausgespielte Farbe nicht bedienen. Sobald der letzte Spieler
      * in den Stich gespielt hat wird dieser dem Gewinner zugeordnet und eine neue Warteschlange
-     * erstellt beginnend mit dem Gewinner
-     * @param spieler der die Karte spielt
-     * @param karte welche vom SPieler gespielt wird
-     * @throws wenn this.istAktiverSpieler(spieler) == false
-     * @throws wenn spieler bedienen kann, es aber nicht tut
+     * erstellt beginnend mit dem Gewinner.
+     * @param spieler Der Spieler der die Karte spielt.
+     * @param karte Die Karte welche vom Spieler gespielt wird.
+     * @throws Wenn Trumpfwahl und Vorhersagen noch nicht abgeschlossen sind.
+     * @throws Wenn `istAktiverSpieler(spieler) == false`
+     * @throws Wenn spieler bedienen kann, es aber nicht tut.
      */
     public spieleKarte(spieler: Spieler, karte: Karte): boolean {
         if (this.trumpffarbe == KartenTyp.bizard) {
-            throw Error('Zuerst muss der Trmpuf gesetzt werden')
+            throw Error('Zuerst muss der Trumpf gesetzt werden')
         } else if (this.vorhersagen.size != this.reihenfolge.length) {
             throw Error('Zuerst muessen die Vorhersagen getroffen werden')
         } else if (this.istAktiverSpieler(spieler) == false) {
@@ -186,9 +188,9 @@ export default class Runde {
 
     /**
      * Weist dem Stich den Gewinner zu, erstellt einen neuen Stich und erstellt eine neue
-     * Wrteschlange beginnend mit dem Gewinner
-     * @returns den Gewinner des Stiches
-     * @throws wenn getWarteschlange().beendet() == false
+     * Warteschlange beginnend mit dem Gewinner
+     * @returns den Gewinner des Stiches.
+     * @throws wenn `getWarteschlange().beendet() == false`
      */
     private stichZuweisen(): void {
         if (this.warteschlange.beendet() == false) {
@@ -202,10 +204,7 @@ export default class Runde {
         }
     }
 
-    /**
-     * @returns Wahr wenn jeder Stich in der Runde zugewiesen wurde und die Runde somit
-     * beendet ist.
-     */
+    /** @returns Wahr wenn jeder Stich in der Runde zugewiesen wurde. */
     public beendet(): boolean {
         return this.stiche.size == this.rundenNummer
     }
@@ -214,8 +213,8 @@ export default class Runde {
      * Der Lehrling, der die Anzahl seiner gewonnenen Stiche genau vorhersagen konnte, erhält
      * 20 Erfahrungspunkte plus 10 Punkte pro gewonnenen Stich. Wer daneben getippt hat, verliert
      * jeweils 10 Erfahrungspunkte für jeden Stich, den er über oder unter seiner Vorhersage liegt.
-     * @returns Eine Map mit den Spielern als Schluesselwerten und den Punkten als Eintraege
-     * @throws wenn beendet() == false
+     * @returns Eine {@link PunkteListe} mit den Spielern als Schlüsselwerten und den Punkten als Einträge.
+     * @throws Wenn `beendet() == false`
      */
     public rundeAuswerten(): PunkteListe {
         if (this.beendet() == false) {

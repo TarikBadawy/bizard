@@ -3,22 +3,20 @@ import KartenTyp from "./KartenTyp"
 import Spieler from "./Spieler"
 
 /**
- * Ein stich, welcher von den Spielern gewonnen werden kann. In einer Runde werden
- * Stiche gleich der Rundenanzahl verteielt. Jeder Spieler spielt eine Karte in den Stich
+ * Ein stich, welcher von den Spielern gewonnen werden kann.
+ * Jeder Spieler spielt genau eine Karte in den Stich.
  */
 export default class Stich extends Map<Spieler, Karte> {
-    /**
-     * Erstellt einen leeren Stich
-     */
+    /** Erstellt einen leeren Stich. */
     public constructor() {
         super()
     }
 
     /**
-     * Legt eine Karte auf den Stich und wird einem Spieler zugeordet
-     * @param spieler der die Karte gespielt hat
-     * @param karte die vom Spieler gespielt wurde
-     * @throws Wenn has(spieler)
+     * Legt eine Karte auf den Stich und wird einem Spieler zugeordet.
+     * @param spieler Spieler der die Karte gespielt hat.
+     * @param karte Karte die vom Spieler gespielt wurde.
+     * @throws Wenn `has(spieler)`
      */
     public spieleKarte(spieler: Spieler, karte: Karte): void {
         if (this.has(spieler)) {
@@ -29,9 +27,9 @@ export default class Stich extends Map<Spieler, Karte> {
     }
 
     /**
-     * @param spieler nach dem gesucht werden soll
-     * @returns die Karte, welche vom Spieler gelegt wurde
-     * @throws Wenn has(spieler) == false
+     * @param spieler Der Spieler dessen Karte gesucht werden soll.
+     * @returns Die Karte, welche vom Spieler gelegt wurde.
+     * @throws Wenn `has(spieler) == false`
      */
     public getKarte(spieler: Spieler): Karte {
         const karte = this.get(spieler)
@@ -43,8 +41,9 @@ export default class Stich extends Map<Spieler, Karte> {
     }
 
     /**
-     * @param karte nach der gesucht werden soll
-     * @returns den Spieler, der die Karte gespielt hat
+     * @param karte Die Karte nach der gesucht werden soll.
+     * @returns Der Spieler, der die Karte gespielt hat.
+     * @throws Wenn Karte von keinem Spieler gespielt wurde.
      */
     public getSpieler(karte: Karte): Spieler {
         for (const [spieler, k] of this.entries()) {
@@ -56,9 +55,9 @@ export default class Stich extends Map<Spieler, Karte> {
     }
 
     /**
-     * Die Farbe, die zu erst ein einem Stich gespielt wird is die angespielte Farbe.
-     * @returns Die Farbe, welche bedient werden muss. Undefined, wenn noch keine Karte mit
-     * einer Farbe auf dem Stapel liegt
+     * Die Farbe, die zu erst ein einem Stich gespielt wird ist die angespielte Farbe.
+     * @returns Die Farbe, welche bedient werden muss. `undefined`, wenn noch keine Karte mit
+     * einer Farbe auf dem Stapel liegt.
      */
     public getAngespielteFarbe(): KartenTyp | undefined {
         for (const karte of this.values()) {
@@ -75,12 +74,12 @@ export default class Stich extends Map<Spieler, Karte> {
      * 2. Den Höchsten Trumpf gespielt hat
      * 3. Die Hoechste zu bedienende Karte gespielt hat
      * 4. Den Ersten Barr gespielt hat
-     * @param trumpffarbe Der Trumpf des Stiches. Da eine Runde keinen Trumpf haben muss,
-     * ist der Paramater optional. Der bizard ist keine Trumpffarbe. Wenn der Trumpf ein
-     * vard ist, dann wird dieser ignoriert.
-     * @returns den Gewinner eines Stichs
-     * @throws wenn trumpffarbe == KartenTyp.bizard
-     * @throws wenn size == 0
+     * @param trumpffarbe Der Trumpf des Stiches. Optional, da eine Runde keinen Trumpf haben muss.
+     * Der Bizard ist keine Trumpffarbe. Wenn der Trumpf ein Bard ist, dann wird die Trumpffarbe
+     * ignoriert.
+     * @returns Der Gewinner eines Stiches.
+     * @throws wenn `trumpffarbe == KartenTyp.bizard`
+     * @throws wenn `size == 0`
      */
     public getGewinner(trumpffarbe?: KartenTyp): Spieler {
         if (trumpffarbe == KartenTyp.bizard) {

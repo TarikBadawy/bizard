@@ -4,6 +4,7 @@ import Karte from "./Karte";
 import KartenTyp from "./KartenTyp";
 import { KartenNachricht, SpielNachricht } from "./Nachricht";
 
+/** Der Client, der sich mit einem Websocket vom Nutzer verbindet. */
 export default class Client implements IClient {
     private readonly socket: Socket
 
@@ -35,6 +36,11 @@ export default class Client implements IClient {
         this.socket.on('karte', handler)
     }
     
+    /**
+     * Der Nutzer ist dazu in der Lage Bots zum Spiel hinzuzufügen.
+     * @param handler Der Handler der ausgeführt wird, sobald der Spieler probiert
+     * einen Bot zum Spiel hinzuzufügen.
+     */
     public onBotHinzufuegen(handler: () => void): void {
         this.socket.on('bot', handler)
     }
