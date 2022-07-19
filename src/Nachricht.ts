@@ -100,7 +100,7 @@ export function spielNachricht(spiel: Spiel, aktion: Aktion): SpielNachricht {
     }
 }
 
-export function rundeNachricht(runde: Runde): RundeNachricht {
+function rundeNachricht(runde: Runde): RundeNachricht {
     const warteschlange = runde.getWarteschlange()
     return {
         rundenNummer: runde.getRundenNummer(),
@@ -143,7 +143,7 @@ function stichNachricht(stich: Stich): StichNachricht {
     }))
 }
 
-export function spielerNachricht(spieler: Spieler): SpielerNachricht {
+function spielerNachricht(spieler: Spieler): SpielerNachricht {
     return {
         id: spieler.getId(),
         name: spieler.getName()

@@ -53,13 +53,6 @@ test('Finde die Karte eines Spielers im Stich', () => {
     expect(stich1.getKarte(spieler4)).toBe(karte4)
 })
 
-test('Finde den Spieler einer Karte im Stich', () => {
-    expect(stich1.getSpieler(karte1)).toBe(spieler1)
-    expect(stich1.getSpieler(karte2)).toBe(spieler2)
-    expect(stich1.getSpieler(karte3)).toBe(spieler3)
-    expect(stich1.getSpieler(karte4)).toBe(spieler4)
-})
-
 test('getBedienteKarte()', () => {
     expect(stich1.getAngespielteFarbe()).toBe(KartenTyp.gruen)
     expect(stich2.getAngespielteFarbe()).toBe(KartenTyp.rot)

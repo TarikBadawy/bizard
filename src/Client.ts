@@ -1,6 +1,5 @@
 import { Socket } from "socket.io";
 import IClient from "./IClient";
-import Karte from "./Karte";
 import KartenTyp from "./KartenTyp";
 import { KartenNachricht, SpielNachricht } from "./Nachricht";
 

@@ -90,7 +90,7 @@ export default class Runde {
      * @param spieler Der Spieler überprüft werden soll.
      * @returns Wahr wenn der angegebene Spieler gerade am Zug ist.
      */
-    public istAktiverSpieler(spieler: Spieler): boolean {
+    private istAktiverSpieler(spieler: Spieler): boolean {
         return this.getWarteschlange().getAktiverSpieler() == spieler
     }
 
@@ -176,31 +176,17 @@ export default class Runde {
                 spieler.entferneKarte(karte)
                 this.stich.spieleKarte(spieler, karte)
                 if (this.warteschlange.beendet()) {
-                    this.stichZuweisen()
+                    const gewinner = this.stich.getGewinner(this.trumpffarbe)
+                    this.stiche.set(this.stich, gewinner)
+                    this.stich = new Stich()
+                    const index = this.reihenfolge.indexOf(gewinner)
+                    this.warteschlange = new SpielerQueue(this.reihenfolge, index)
                     return true
                 } else {
                     this.warteschlange.naechsterSpieler()
                     return false
                 }
             }
-        }
-    }
-
-    /**
-     * Weist dem Stich den Gewinner zu, erstellt einen neuen Stich und erstellt eine neue
-     * Warteschlange beginnend mit dem Gewinner
-     * @returns den Gewinner des Stiches.
-     * @throws wenn `getWarteschlange().beendet() == false`
-     */
-    private stichZuweisen(): void {
-        if (this.warteschlange.beendet() == false) {
-            throw Error('Nicht alle Spieler haben in den Stich gespielt')
-        } else {
-            const gewinner = this.stich.getGewinner(this.trumpffarbe)
-            this.stiche.set(this.stich, gewinner)
-            this.stich = new Stich()
-            const index = this.reihenfolge.indexOf(gewinner)
-            this.warteschlange = new SpielerQueue(this.reihenfolge, index)
         }
     }
 

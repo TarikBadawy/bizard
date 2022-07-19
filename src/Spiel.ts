@@ -49,13 +49,6 @@ export default class Spiel {
     }
 
     /**
-     * @returns Eine Liste von den Spielernamen in der Sitzreihenfolge angeordnet.
-     */
-    public getSpielerNamen(): string[] {
-        return this.getReihenfolge().map(s => s.getName())
-    }
-
-    /**
      * Fügt einen Spieler zum Spiel hinzu
      * @param spieler Der Spieler, welcher zum Spiel hinzugefügt wird
      */

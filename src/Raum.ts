@@ -24,10 +24,6 @@ export default class Raum {
         this.spieler = new Map<IClient, Spieler>()
     }
 
-    public getClients(): IClient[] {
-        return Array.from(this.spieler.keys())
-    }
-
     /**
      * Füge ein Spieler-Client paar zum Raum hinzu.
      * @param spieler Der zum Client gehörende Spieler

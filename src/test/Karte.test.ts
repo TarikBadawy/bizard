@@ -2,11 +2,7 @@ import Karte from "../Karte"
 import KartenTyp from "../KartenTyp"
 
 const karte1 = new Karte(KartenTyp.bizard, 1)
-const karte2 = new Karte(KartenTyp.barr, 1)
 const karte3 = new Karte(KartenTyp.rot, 5)
-const karte4 = new Karte(KartenTyp.gruen, 3)
-const karte5 = new Karte(KartenTyp.blau, 8)
-const karte6 = new Karte(KartenTyp.gelb, 1)
 
 test('Der Kartenwert liegt im richtigen Bereich', () => {
     expect(() => new Karte(KartenTyp.rot, 0)).toThrow()

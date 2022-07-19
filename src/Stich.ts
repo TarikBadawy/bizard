@@ -41,20 +41,6 @@ export default class Stich extends Map<Spieler, Karte> {
     }
 
     /**
-     * @param karte Die Karte nach der gesucht werden soll.
-     * @returns Der Spieler, der die Karte gespielt hat.
-     * @throws Wenn Karte von keinem Spieler gespielt wurde.
-     */
-    public getSpieler(karte: Karte): Spieler {
-        for (const [spieler, k] of this.entries()) {
-            if (karte === k) {
-                return spieler
-            }
-        }
-        throw Error('Karte wurde von keinem Spieler gespielt')
-    }
-
-    /**
      * Die Farbe, die zu erst ein einem Stich gespielt wird ist die angespielte Farbe.
      * @returns Die Farbe, welche bedient werden muss. `undefined`, wenn noch keine Karte mit
      * einer Farbe auf dem Stapel liegt.

@@ -9,8 +9,10 @@ test('BotClient', () => {
             const spieler = new Spieler('BOT')
             const bot = new BotClient(spieler.getId())
             raum.registriereSpieler(spieler, bot)
+            if (k == 3) {
+                bot.starteSpiel()
+            }
         }
-        (raum.getClients().at(-1) as BotClient).starteSpiel()
         expect(raum.spiel.beendet()).toBe(true)
     }
 })

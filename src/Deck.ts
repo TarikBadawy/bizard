@@ -22,11 +22,6 @@ export default class Deck {
         this.karten = shuffle(this.karten)
     }
 
-    /** @returns Die übrige anzahl an Karten im Deck */
-    public getAnzahlKarten(): number {
-        return this.karten.length
-    }
-
     /**
      * @returns Eine zufaellige Karte aus dem Deck.
      * @throws Wenn `getAnzahlKarten() == 0`

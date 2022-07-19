@@ -23,7 +23,7 @@ export default class PunkteListe extends Map<Spieler, number> {
         if (liste.size != this.size) {
             throw Error('Liste haben verschiedene längen')
         }
-        for (const [spieler, punkte] of this) {
+        for (const [spieler, punkte] of this.entries()) {
             if (liste.has(spieler)) {
                 this.set(spieler, punkte + liste.get(spieler)!)
             } else {
