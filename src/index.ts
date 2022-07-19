@@ -1,5 +1,6 @@
 import BotNamen from "./BotNamen"
 import BotClient from "./BotClient"
+import cors from "cors" // Nur für Entwicklung mit React
 import express from 'express'
 import http from "http"
 import Spieler from "./Spieler"
@@ -12,7 +13,12 @@ import Client from "./Client"
 
 const app = express()
 const server = http.createServer(app)
-export const io = new Server(server)
+export const io = new Server(server, {
+    cors: {
+        origin: "*",
+        methods: ["GET", "POST"]
+    } // Nur für Entwicklung mit React
+})
 
 const raeume = new Map<string, Raum>()
 
@@ -21,8 +27,10 @@ if (process.env.NODE_ENV != 'test') {
 }
 
 async function main() {
+    app.use(cors()) // Nur für Entwicklung mit React
     app.use(express.static(resolve(__dirname, '../public')))
     io.on('connection', socket => {
+        socket.emit('raeume', raumListe())
         socket.on('erstelle', (name, runden) => {
             if (typeof name == "string" && typeof runden == "number") {
                 const raum = new Raum(runden, 'Raum von ' + name)
@@ -32,7 +40,7 @@ async function main() {
                 socket.emit('id', spieler.getId())
                 client.onBotHinzufuegen(() => botHinzufuegen(raum))
                 raum.registriereSpieler(spieler, client)
-                io.emit('raeume', Array.from(raeume.entries()).map(([id, raum]) => [id, raum.name]))
+                io.emit('raeume', raumListe())
             }
         })
         socket.on('beitreten', (name, id) => {
@@ -54,4 +62,8 @@ export function botHinzufuegen(raum: Raum) {
     const spieler = new Spieler(name)
     const bot = new BotClient(spieler.getId())
     raum.registriereSpieler(spieler, bot)
+}
+
+function raumListe() {
+    return Array.from(raeume.entries()).map(([id, raum]) => [id, raum.name])
 }
