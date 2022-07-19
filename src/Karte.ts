@@ -5,9 +5,10 @@ export default class Karte {
     private readonly wert: number
 
     /**
-     * @param typ Der Typ stellt die Farbe oder die Spezialitaet der Karte dar.
+     * @param typ Der KartenTyp der Karte
      * @param wert Der Zahlenwert der Karte. Der Wert darf (inklusive zwischen 1 und 13 liegen).
-     * Sollte nur gesetzt werden, wenn der Typ der Karte einer Farbe entspricht.
+     * Der Wert ist nur für Karten mit einer Farbe als Typ relevant. Die Spezialkarten tragen
+     * keinen Wert
      * @throws wenn nicht 1 <= wert <= 13
      */
     constructor(typ: KartenTyp, wert: number = 1) {
@@ -23,18 +24,15 @@ export default class Karte {
         return this.typ
     }
 
-    /**
-     * @returns Den Wert der farbigen Karte. Wenn der Typ der Karte keine Farbe ist, ist dieser Wert beliebeig und irrelevant.
-     */
     public getWert(): number {
         return this.wert
     }
 
     /**
-     * Vergleicht den Typ und Wert einer anderen Karte
-     * @param karte 
+     * @param karte mit der diese Karte verglichen werden soll.
+     * @return Wahr, wenn diese und die eingebenene Karte gliechen Typ und Wert haben
      */
-    public equals(karte: Karte) {
+    public equals(karte: Karte): boolean {
         if(this.typ == KartenTyp.bizard || this.typ == KartenTyp.barr) {
             return karte.getTyp() == this.typ
         } else {

@@ -4,11 +4,20 @@ import { Aktion, kartenNachricht, spielNachricht } from "./Nachricht"
 import Spiel from "./Spiel"
 import Spieler from "./Spieler"
 
+/**
+ * Ein Raum, dem Spieler-Client Paare beitreten können. Dieser Raum hostet das Spiel
+ * und fängt die Abfragen der Clients ab.
+ */
 export default class Raum {
     public readonly name: string
     public readonly spiel: Spiel
     private readonly spieler: Map<IClient, Spieler>
 
+    /**
+     * Erstelle einen neuen Raum
+     * @param runden Die Anzahl der Runden die gespielt werden.
+     * @param name Der Name des Raumes.
+     */
     constructor(runden: number, name: string) {
         this.name = name
         this.spiel = new Spiel(runden)
@@ -19,6 +28,11 @@ export default class Raum {
         return Array.from(this.spieler.keys())
     }
 
+    /**
+     * Füge ein Spieler-Client paar zum Raum hinzu.
+     * @param spieler Der zum Client gehörende Spieler
+     * @param client Der zum Spieler gehörende Client
+     */
     public registriereSpieler(spieler: Spieler, client: IClient): void {
         if (this.spiel.gestartet()) {
             throw Error('Spielt hat bereits begonnen')

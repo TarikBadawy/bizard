@@ -2,6 +2,10 @@ import PunkteListe from "./PunkteListe"
 import Runde from "./Runde"
 import Spieler from "./Spieler"
 
+/**
+ * Modelliert einen Spielablauf. Ein Spiel setzt sich zusammen aus mehreren Runden,
+ * einer Liste von Spielern und deren erreichte Punktzahl.
+ */
 export default class Spiel {
     private readonly spieler: Spieler[]
     private readonly rundenAnzahl: number
@@ -24,7 +28,7 @@ export default class Spiel {
         return Array.from(this.spieler.values())
     }
 
-    public getPunkteListe(): PunkteListe{
+    public getPunkteListe(): PunkteListe {
         return this.punkteListe
     }
 
@@ -33,8 +37,8 @@ export default class Spiel {
     }
 
     /**
-     * @returns die aktuelle Runde
-     * @throws Wenn gestartet() == false
+     * @returns Die aktuelle Runde
+     * @throws Wenn `gestartet() == false`
      */
     public getRunde(): Runde {
         if (this.gestartet() == false) {
@@ -44,18 +48,25 @@ export default class Spiel {
         }
     }
 
+    /**
+     * @returns Eine Liste von den Spielernamen in der Sitzreihenfolge angeordnet.
+     */
     public getSpielerNamen(): string[] {
         return this.getReihenfolge().map(s => s.getName())
     }
 
-    public fuegeSpielerHinzu(spieler: Spieler) {
+    /**
+     * Fügt einen Spieler zum Spiel hinzu
+     * @param spieler Der Spieler, welcher zum Spiel hinzugefügt wird
+     */
+    public fuegeSpielerHinzu(spieler: Spieler): void {
         this.spieler.push(spieler)
     }
 
     /**
-     * Startet das Spiel, erstellt die erste Runde, und benschrichtig jeden Spieler
-     * @throws gestartet()
-     * @throws Wenn Spielerzahl nicht zwischen 3 und 6 liegt
+     * Startet das Spiel, und erstellt die erste Runde.
+     * @throws Wenn `gestartet()`
+     * @throws Wenn Die Spielerzahl nicht zwischen 3 und 6 liegt.
      */
     public starteSpiel(): void {
         if (this.gestartet()) {
@@ -68,10 +79,12 @@ export default class Spiel {
         }
     }
 
+    /** @returns Wahr, wenn das Spiel gestartet ist. */
     public gestartet(): boolean {
         return this.runde != undefined
     }
-
+    
+    /** @returns Wahr, wenn alle Runden gespielt wurden. */
     public beendet(): boolean {
         const runde = this.runde
         if (runde != undefined) {
@@ -82,9 +95,9 @@ export default class Spiel {
 
     /**
      * Erstellt eine neue Runde. Abgesehen fuer die erste Runde, muss sichergestellt werden, dass
-     * die vorherige Runde abgeschlossen ist
-     * @throws Wenn getRunde().beendet() == false
-     * @throws Wenn beendet() == true
+     * die vorherige Runde abgeschlossen ist.
+     * @throws Wenn `getRunde().beendet() == false`
+     * @throws Wenn `beendet() == true`
      */
     public naechsteRunde(): void {
         if (this.runde == undefined) {
@@ -99,6 +112,10 @@ export default class Spiel {
         }
     }
 
+    /**
+     * Wertet die Punktzahlen der abgeschlossenen Runde aus und addiert sie auf die
+     * Gesamtpunktzahl der Spieler.
+     */
     public werteRundeAus(): void {
         const runde = this.getRunde()
         if (runde.beendet()) {

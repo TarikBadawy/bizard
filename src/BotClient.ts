@@ -3,6 +3,7 @@ import Karte from "./Karte";
 import KartenTyp from "./KartenTyp";
 import { KartenNachricht, SpielNachricht } from "./Nachricht";
 
+/** Ein Client, welcher zufällige und valide Aktionen durchführt. */
 export default class BotClient implements IClient {
     private id: string
     private hand: KartenNachricht[]
