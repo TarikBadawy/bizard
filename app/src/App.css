@@ -1,0 +1,18 @@
+html {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: darkslategrey;
+  color: white;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+th, td {
+  border: 1.5px solid white;
+  padding: 10px;
+}
+
+button {
+  padding: 5px;
+}
